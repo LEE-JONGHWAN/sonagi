@@ -70,7 +70,9 @@ public class SonagiGame extends JFrame {
             setLayout(null);
             fallingLabel = new JLabel("", SwingConstants.CENTER);
             fallingLabel.setFont(new Font("Serif", Font.BOLD, 28));
-            fallingLabel.setSize(200, 30);
+            FontMetrics fm = fallingLabel.getFontMetrics(fallingLabel.getFont());
+            int textWidth = fm.stringWidth(currentWord);
+            fallingLabel.setSize(textWidth + 20, 30); // 여유를 20px 줌
             fallingLabel.setForeground(Color.MAGENTA);
             add(fallingLabel);
         }
@@ -87,8 +89,14 @@ public class SonagiGame extends JFrame {
             int idx = (int) (Math.random() * wordList.size());
             currentWord = wordList.get(idx);
             fallingLabel.setText(currentWord);
+
+            // 텍스트 너비 계산 후 라벨 크기 재조정
+            FontMetrics fm = fallingLabel.getFontMetrics(fallingLabel.getFont());
+            int textWidth = fm.stringWidth(currentWord);
+            fallingLabel.setSize(textWidth + 20, 30); // 여유 공간 포함
+
             yPosition = 0;
-            fallingLabel.setLocation((int) (Math.random() * 150), yPosition);
+            fallingLabel.setLocation((int) (Math.random() * (getWidth() - fallingLabel.getWidth())), yPosition);
         }
 
         public String getCurrentWord() {
